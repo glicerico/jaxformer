@@ -246,3 +246,4 @@ def create_master(config):
         master = RemoteMaster(endpoints_ips, mesh_shape, config)
 
     return master
+
