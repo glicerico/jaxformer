@@ -42,7 +42,7 @@ def socket_write(socket, fn, args):
     data_bytes = pickle.dumps(args)
     data_size = len(data_bytes).to_bytes(8, 'little', signed=False)
     print(f"sending fn: {fn}\nsize: {len(data_bytes)}\n bytes: {args}\n")
-    print(f"sending fn: {data_fn}\nsize: {data_size}\n bytes: {data_bytes}")
+    print(f"sending fn: {data_fn}\nsize: {data_size}\n bytes: {data_bytes}\n")
     socket.send(data_fn)
     socket.send(data_size)
     socket.send(data_bytes)
@@ -54,10 +54,10 @@ def socket_read(s, buf_size=1024*32):
     data_args_size_bytes = s.recv(8)
     data_args_size = int.from_bytes(data_args_size_bytes, 'little', signed=False)
     data_args_bytes = s.recv(min(data_args_size, buf_size))
-    print(f"receving: fn: {data_fn}\nsize: {data_args_size}\n")
-    print(f"receving: fn: {data_fn_bytes}\nsize: {data_args_size_bytes}\n bytes: {data_args_bytes}")
     while len(data_args_bytes) != data_args_size:
         data_args_bytes += s.recv(min(data_args_size, buf_size))
+    print(f"receving: fn: {data_fn}\nsize: {data_args_size}\n")
+    print(f"receving: fn: {data_fn_bytes}\nsize: {data_args_size_bytes}\n bytes: {data_args_bytes}\n")
 
     return data_fn, pickle.loads(data_args_bytes)
 
