@@ -43,6 +43,7 @@ def socket_write(socket, fn, args):
     data_size = len(data_bytes).to_bytes(8, 'little', signed=False)
     print(f"sending fn: {fn}\nsize: {len(data_bytes)}\n bytes: {args}\n")
     print(f"sending fn: {data_fn}\nsize: {data_size}\n bytes: {data_bytes}\n")
+    print(f"socket: {socket}")
     socket.send(data_fn)
     socket.send(data_size)
     socket.send(data_bytes)
