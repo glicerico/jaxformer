@@ -184,6 +184,7 @@ class RemoteMaster:
                 print(f"worker_data_fn: {worker_data_fn}, workers_return: {workers_return}")
             assert worker_data_fn == FN_LOAD_RET
             return workers_return
+        print(f"self.workers: {self.worker_sockets}")
         workers_return = par_map(await_load, self.worker_sockets)
         print('socket_read', 'wait', 'end')
 

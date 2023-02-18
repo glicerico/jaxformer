@@ -67,6 +67,7 @@ def load_ckpt(state_old, path, step_overwrite=None, ignore_optimizer=False):
             ckpt = json.load(f)
 
 
+    print(f"jax.process.count: {jax.process_count()}")
     assert jax.process_count() == ckpt['process_count']
 
     state_new = {
