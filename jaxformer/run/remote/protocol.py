@@ -54,6 +54,8 @@ def socket_read(s, buf_size=1024*32):
     data_args_size_bytes = s.recv(8)
     data_args_size = int.from_bytes(data_args_size_bytes, 'little', signed=False)
     data_args_bytes = s.recv(min(data_args_size, buf_size))
+    print(f"receving: fn: {data_fn_bytes}\nsize: {data_args_size_bytes}\n bytes: {data_args_bytes}\n")
+    print(f"receving: fn: {data_fn}\nsize: {data_args_size}, data: {pickle.loads(data_args_bytes)}\n")
     while len(data_args_bytes) != data_args_size:
         data_args_bytes += s.recv(min(data_args_size, buf_size))
     print(f"receving: fn: {data_fn_bytes}\nsize: {data_args_size_bytes}\n bytes: {data_args_bytes}\n")
