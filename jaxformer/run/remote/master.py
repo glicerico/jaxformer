@@ -178,9 +178,10 @@ class RemoteMaster:
         def await_load(s):
             print(f"awaiting load for socket {s}")
             worker_data_fn, workers_return = socket_read(s)
+            print(f"worker_data_fn: {worker_data_fn}, workers_return: {workers_return}")
             while worker_data_fn == FN_LOAD_WAIT_CALL:
-                print(f"worker_data_fn: {worker_data_fn}, workers_return: {workers_return}")
                 worker_data_fn, workers_return = socket_read(s)
+                print(f"worker_data_fn: {worker_data_fn}, workers_return: {workers_return}")
             assert worker_data_fn == FN_LOAD_RET
             return workers_return
         workers_return = par_map(await_load, self.worker_sockets)
