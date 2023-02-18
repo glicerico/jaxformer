@@ -176,15 +176,12 @@ class RemoteMaster:
 
         print('socket_read', 'wait', 'begin')
         def await_load(s):
-            print(f"awaiting load for socket {s}")
             worker_data_fn, workers_return = socket_read(s)
-            print(f"worker_data_fn: {worker_data_fn}, workers_return: {workers_return}")
             while worker_data_fn == FN_LOAD_WAIT_CALL:
+                print(worker_data_fn, workers_return)
                 worker_data_fn, workers_return = socket_read(s)
-                print(f"worker_data_fn: {worker_data_fn}, workers_return: {workers_return}")
             assert worker_data_fn == FN_LOAD_RET
             return workers_return
-        print(f"self.workers: {self.worker_sockets}")
         workers_return = par_map(await_load, self.worker_sockets)
         print('socket_read', 'wait', 'end')
 
@@ -249,4 +246,3 @@ def create_master(config):
         master = RemoteMaster(endpoints_ips, mesh_shape, config)
 
     return master
-
