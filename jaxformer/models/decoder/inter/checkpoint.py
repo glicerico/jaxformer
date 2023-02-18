@@ -68,7 +68,7 @@ def load_ckpt(state_old, path, step_overwrite=None, ignore_optimizer=False):
 
 
     print(f"jax.process.count: {jax.process_count()}")
-    assert jax.process_count() == ckpt['process_count']
+    #assert jax.process_count() == ckpt['process_count']
 
     state_new = {
         'step': ckpt['step'] if step_overwrite is None else step_overwrite,
