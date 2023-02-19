@@ -1,5 +1,5 @@
 {
-    "debug_mock_data": true,
+    "debug_mock_data": false,
     "debug_emulate_tpu_on_cpu": false,
     "debug_run_local": false,
 
