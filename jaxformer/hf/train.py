@@ -76,11 +76,12 @@ def create_args(args=argparse.Namespace()):
 
     args.seed = 42
 
-    args.model = 'Salesforce/codegen-16B-mono'
+    args.model = 'Salesforce/codegen-350M-multi'
 
     args.deepspeed_config = DEEPSPEED_CONFIG
 
-    args.data_train_set = 'gs://sfr-tpu-us-east1-research/enijkamp/jaxformer/datasets/thepile/train/*.tfrecords'
+    # args.data_train_set = 'gs://sfr-tpu-us-east1-research/enijkamp/jaxformer/datasets/thepile/train/*.tfrecords'
+    args.data_train_set = "gs://codegen_test0/dataset_amr_tutorial/*.tfrecords",
 
     args.opt_steps_train = 1000
 
@@ -88,7 +89,7 @@ def create_args(args=argparse.Namespace()):
     args.model_vocab_size = 51200
 
     args.debug_fixed_batch = False
-    args.debug_mock_data = False
+    args.debug_mock_data = True
 
     return args
 
