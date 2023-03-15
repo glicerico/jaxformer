@@ -329,14 +329,14 @@ def save_sharded_to_hf_format(
     devices = np.array([jax.devices()[0]]).reshape((1, 1, 1))
     with maps.Mesh(devices, ("dp", "pt", "mp")):
         config_local = config.copy()
-        config_local["tpu_cores"] = maps.thread_resources.env.shape["mp"]
+        config_local["tpu_cores"] = 1 # maps.thread_resources.env.shape["mp"]
 
         model = TransformerDecoder(config=config_local, maybe_pjit=pjit_noop, maybe_with_sharding_constraint=with_sharding_constraint_noop, optimizer=None)
 
         save_pytree_as_hf(
             model.state["model"],
             input_ckpt=input_ckpt,
-            shards_in=config["tpu_cores"],
+            shards_in=config_local["tpu_cores"],
             output_path=output_path,
             n_layers=config["model_layers"],
             np_dtype=np_dtype,
