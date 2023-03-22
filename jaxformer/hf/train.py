@@ -89,7 +89,7 @@ def create_args(args=argparse.Namespace()):
     args.model_vocab_size = 51200
 
     args.debug_fixed_batch = False
-    args.debug_mock_data = True
+    args.debug_mock_data = False
 
     return args
 
