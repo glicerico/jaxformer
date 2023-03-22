@@ -186,7 +186,7 @@ def train(args):
 
         # stats
 
-        print(f'{step} {loss:8.3f}')
+        print(f'Step: {step}; loss: {loss:8.3f}')
 
 
 
