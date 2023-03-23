@@ -193,7 +193,7 @@ def train(args):
     ckpt_id = step
     model_engine.save_checkpoint(checkpoint_dir, ckpt_id)
 
-    saved_model = AutoModelForCausalLM.from_pretrained(checkpoint_dir)
+    saved_model = AutoModelForCausalLM.from_pretrained(os.path.join(checkpoint_dir, "pytorch_model.bin"))
     ds_engine = deepspeed.init_inference(saved_model)
     saved_model = ds_engine.module
 
