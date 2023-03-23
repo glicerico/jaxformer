@@ -194,6 +194,10 @@ def train(args):
     ckpt_id = step
     model_engine.save_checkpoint(checkpoint_dir, ckpt_id)
 
+    saved_model = AutoModelForCausalLM.from_pretrained(os.path.join(checkpoint_dir, checkpoint_name))
+    ds_engine = deepspeed.init_inference(saved_model)
+    saved_model = ds_engine.module
+
     model.eval()
     test_sent = "Sentence: The boy is angry . AMR: "
     predict(model, test_sent, "cuda")
@@ -201,6 +205,9 @@ def train(args):
     test_sent = "# A simple hello world function"
     predict(model, test_sent, "cuda")
 
+    test_sent = "# A simple hello world function"
+    print("Saved model")
+    predict(saved_model, test_sent, "cuda")
 
 def predict(model, prompt, dev):
     tokenizer = AutoTokenizer.from_pretrained("gpt2")
