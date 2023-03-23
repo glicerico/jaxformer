@@ -196,29 +196,7 @@ def train(args):
     ckpt_id = step
     model_engine.save_checkpoint(checkpoint_dir, ckpt_id)
 
-    saved_model = AutoModelForCausalLM.from_pretrained(args.model)
-    saved_model.load_state_dict(torch.load("pytorch_model.bin"))
 
-    model.eval()
-    test_sent = "Sentence: The boy is angry . AMR: "
-    predict(model, test_sent, "cuda")
-
-    test_sent = "# A simple hello world function"
-    predict(model, test_sent, "cuda")
-
-    saved_model.eval()
-    test_sent = "# A simple hello world function"
-    print("Saved model")
-    predict(saved_model, test_sent, "cuda")
-
-def predict(model, prompt, dev):
-    tokenizer = AutoTokenizer.from_pretrained("gpt2")
-    device = torch.device(dev)
-    tokenized_sent = tokenizer(prompt, return_tensors="pt")
-    with torch.no_grad():
-        # input_ids = data[0].to(device)
-        output = model.generate(tokenized_sent["input_ids"].to(device))
-        print(f"Result: {tokenizer.decode(output[0])}")
 ########################################################################################################
 ## preamble
 
