@@ -84,7 +84,7 @@ def create_args(args=argparse.Namespace()):
     # args.data_train_set = 'gs://sfr-tpu-us-east1-research/enijkamp/jaxformer/datasets/thepile/train/*.tfrecords'
     args.data_train_set = "gs://codegen_test0/full-amr-set/*.tfrecords"
 
-    args.opt_steps_train = 1000
+    args.opt_steps_train = 2
 
     args.model_seq_len = 2048
     args.model_vocab_size = 51200
@@ -211,12 +211,13 @@ def train(args):
     model.eval()
     tokenizer = AutoTokenizer.from_pretrained("gpt2")
     test_sent = "Sentence: The boy is angry . AMR: "
-    tokenized_sent = tokenizer.encode(test_sent)
+    tokenized_sent = tokenizer(test_sent, return_tensors="pt")
+    print(f"Tokenized sent: {tokenized_sent}")
 
     with torch.no_grad():
         # input_ids = data[0].to(device)
-        output = model(tokenized_sent)
-        print(tokenizer.decode(output))
+        output = model(tokenized_sent["input_ids"])
+        print(f"Result: {tokenizer.decode(output)}")
 ########################################################################################################
 ## preamble
 
