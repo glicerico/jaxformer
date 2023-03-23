@@ -142,12 +142,6 @@ def train(args):
 
         model = AutoModelForCausalLM.from_pretrained(args.model, config=config)
 
-        model.eval()
-        test_sent = "Sentence: The boy is angry . AMR: "
-        predict(model, test_sent, "cpu")
-        test_sent = "# A simple hello world function"
-        predict(model, test_sent, "cpu")
-
         model.train()
         # TODO(enijkamp): we need to set this flag twice?
         model.gradient_checkpointing_enable()
