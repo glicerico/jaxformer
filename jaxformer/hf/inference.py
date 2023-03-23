@@ -24,4 +24,3 @@ saved_model.eval()
 test_sent = "# A simple hello world function"
 print("Saved model")
 predict(saved_model, test_sent, "cpu")
-

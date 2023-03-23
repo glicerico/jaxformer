@@ -84,7 +84,7 @@ def create_args(args=argparse.Namespace()):
     # args.data_train_set = 'gs://sfr-tpu-us-east1-research/enijkamp/jaxformer/datasets/thepile/train/*.tfrecords'
     args.data_train_set = "gs://codegen_test0/full-amr-set/*.tfrecords"
 
-    args.opt_steps_train = 2
+    args.opt_steps_train = 2000
 
     args.model_seq_len = 2048
     args.model_vocab_size = 51200
