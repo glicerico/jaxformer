@@ -214,9 +214,10 @@ def train(args):
     tokenized_sent = tokenizer(test_sent, return_tensors="pt")
     print(f"Tokenized sent: {tokenized_sent}")
 
+    device = torch.device("cuda")
     with torch.no_grad():
         # input_ids = data[0].to(device)
-        output = model(tokenized_sent["input_ids"])
+        output = model(tokenized_sent["input_ids"].to(device))
         print(f"Result: {tokenizer.decode(output)}")
 ########################################################################################################
 ## preamble
