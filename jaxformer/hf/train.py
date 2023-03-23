@@ -208,17 +208,18 @@ def train(args):
     with open(os.path.join(checkpoint_folder, 'metadata.json'), 'w') as f:
         json.dump(metadata, f)
 
-    model.eval()
+    # Test model
     tokenizer = AutoTokenizer.from_pretrained("gpt2")
     test_sent = "Sentence: The boy is angry . AMR: "
     tokenized_sent = tokenizer(test_sent, return_tensors="pt")
     print(f"Tokenized sent: {tokenized_sent}")
 
     device = torch.device("cuda")
+    model.eval()
     with torch.no_grad():
         # input_ids = data[0].to(device)
-        output = model(tokenized_sent["input_ids"].to(device))
-        print(f"Result: {tokenizer.decode(output)}")
+        output = model.generate(tokenized_sent["input_ids"].to(device))
+        print(f"Result: {tokenizer.decode(output[0])}")
 ########################################################################################################
 ## preamble
 
