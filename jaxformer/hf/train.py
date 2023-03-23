@@ -188,14 +188,16 @@ def train(args):
         print(f'Step: {step}; loss: {loss:8.3f}')
 
     # Save trained model
+
     checkpoint_dir = 'ckpts'
+    if not os.path.exists(checkpoint_dir):
+        os.makedirs(checkpoint_dir)
 
     ckpt_id = step
     model_engine.save_checkpoint(checkpoint_dir, ckpt_id)
 
-    saved_model = AutoModelForCausalLM.from_pretrained(os.path.join(checkpoint_dir, "pytorch_model.bin"))
-    ds_engine = deepspeed.init_inference(saved_model)
-    saved_model = ds_engine.module
+    saved_model = AutoModelForCausalLM.from_pretrained(args.model)
+    saved_model.load_state_dict(torch.load("pytorch_model.bin"))
 
     model.eval()
     test_sent = "Sentence: The boy is angry . AMR: "
@@ -204,6 +206,7 @@ def train(args):
     test_sent = "# A simple hello world function"
     predict(model, test_sent, "cuda")
 
+    saved_model.eval()
     test_sent = "# A simple hello world function"
     print("Saved model")
     predict(saved_model, test_sent, "cuda")
