@@ -188,13 +188,12 @@ def train(args):
         print(f'Step: {step}; loss: {loss:8.3f}')
 
     # Save trained model
-    checkpoint_name = f"model_checkpoint_step_{step}.pt"
     checkpoint_dir = 'ckpts'
 
     ckpt_id = step
     model_engine.save_checkpoint(checkpoint_dir, ckpt_id)
 
-    saved_model = AutoModelForCausalLM.from_pretrained(os.path.join(checkpoint_dir, checkpoint_name))
+    saved_model = AutoModelForCausalLM.from_pretrained(checkpoint_dir)
     ds_engine = deepspeed.init_inference(saved_model)
     saved_model = ds_engine.module
 
