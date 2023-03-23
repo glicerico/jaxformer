@@ -144,7 +144,7 @@ def train(args):
 
         model.eval()
         test_sent = "Sentence: The boy is angry . AMR: "
-        predict(model, test_sent)
+        predict(model, test_sent, "cpu")
 
         model.train()
         # TODO(enijkamp): we need to set this flag twice?
@@ -214,12 +214,12 @@ def train(args):
 
     model.eval()
     test_sent = "Sentence: The boy is angry . AMR: "
-    predict(model, test_sent)
+    predict(model, test_sent, "cuda")
 
 
-def predict(model, prompt):
+def predict(model, prompt, dev):
     tokenizer = AutoTokenizer.from_pretrained("gpt2")
-    device = torch.device("cuda")
+    device = torch.device(dev)
     tokenized_sent = tokenizer(prompt, return_tensors="pt")
     with torch.no_grad():
         # input_ids = data[0].to(device)
