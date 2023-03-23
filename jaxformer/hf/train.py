@@ -216,6 +216,9 @@ def train(args):
     test_sent = "Sentence: The boy is angry . AMR: "
     predict(model, test_sent, "cuda")
 
+    test_sent = "# A simple hello world function"
+    predict(model, test_sent, "cuda")
+
 
 def predict(model, prompt, dev):
     tokenizer = AutoTokenizer.from_pretrained("gpt2")
