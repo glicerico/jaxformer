@@ -189,24 +189,10 @@ def train(args):
 
     # Save trained model
     checkpoint_name = f"model_checkpoint_step_{step}.pt"
-    checkpoint_folder = '.'
+    checkpoint_dir = 'ckpts'
 
-    checkpoint = {
-        'step': step,
-        'model_state_dict': model_engine.module.state_dict(),
-        'optimizer_state_dict': model_engine.optimizer.state_dict(),
-        'loss': loss.item()
-    }
-    torch.save(checkpoint, os.path.join(checkpoint_folder, checkpoint_name))
-
-    metadata = {
-        'model_architecture': 'MyModel',
-        'model_hyperparameters': {'hidden_size': 512, 'num_layers': 4},
-        'training_config': {'batch_size': args.deepspeed_config['train_micro_batch_size_per_gpu'],
-                            'num_steps': args.opt_steps_train}
-    }
-    with open(os.path.join(checkpoint_folder, 'metadata.json'), 'w') as f:
-        json.dump(metadata, f)
+    ckpt_id = step
+    model_engine.save_checkpoint(checkpoint_dir, ckpt_id)
 
     model.eval()
     test_sent = "Sentence: The boy is angry . AMR: "
