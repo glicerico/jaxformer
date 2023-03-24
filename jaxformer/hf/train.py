@@ -77,14 +77,14 @@ def create_args(args=argparse.Namespace()):
 
     args.seed = 42
 
-    args.model = 'Salesforce/codegen-350M-multi'
+    args.model = 'Salesforce/codegen-16B-multi'
 
     args.deepspeed_config = DEEPSPEED_CONFIG
 
     # args.data_train_set = 'gs://sfr-tpu-us-east1-research/enijkamp/jaxformer/datasets/thepile/train/*.tfrecords'
     args.data_train_set = "gs://codegen_test0/full-amr-set/*.tfrecords"
 
-    args.opt_steps_train = 2000
+    args.opt_steps_train = 10000
 
     args.model_seq_len = 2048
     args.model_vocab_size = 51200
@@ -187,14 +187,15 @@ def train(args):
         # stats
         print(f'Step: {step}; loss: {loss:8.3f}')
 
-    # Save trained model
+        # Save trained model
+        checkpoint_dir = 'ckpts'
+        if not os.path.exists(checkpoint_dir):
+            os.makedirs(checkpoint_dir)
 
-    checkpoint_dir = 'ckpts'
-    if not os.path.exists(checkpoint_dir):
-        os.makedirs(checkpoint_dir)
-
-    ckpt_id = step
-    model_engine.save_checkpoint(checkpoint_dir, ckpt_id)
+        if step > 0 and step % 2000 == 0:
+            print(f"Saving checkpoint at step {step}")
+            ckpt_id = step
+            model_engine.save_checkpoint(checkpoint_dir, ckpt_id)
 
 
 ########################################################################################################
