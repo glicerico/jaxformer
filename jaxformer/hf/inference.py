@@ -11,7 +11,7 @@ def predict(model, prompt, dev):
     tokenized_sent = tokenizer(prompt, return_tensors="pt")
     with torch.no_grad():
         # input_ids = data[0].to(device)
-        output = model.generate(tokenized_sent["input_ids"].to(device))
+        output = model.generate(tokenized_sent["input_ids"].to(device), max_new_tokens=100)
         print(f"Result: {tokenizer.decode(output[0])}")
 # Run inference on fine-tuned models
 
