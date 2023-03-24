@@ -21,6 +21,6 @@ saved_model = AutoModelForCausalLM.from_pretrained(model_type)
 saved_model.load_state_dict(torch.load("pytorch_model.bin"))
 
 saved_model.eval()
-test_sent = "# A simple hello world function"
+test_sent = "Sentence: The boy is not tired today . AMR: "
 print("Saved model")
 predict(saved_model, test_sent, "cpu")
