@@ -37,7 +37,7 @@
     "opt_per_replica_batch": 1,
     "opt_params_partitions": 1,
 
-    "data_train_set": "gs://codegen_test0/dataset_amr_tutorial/*.tfrecords",
+    "data_train_set": "gs://codegen_test0/full-amr-set/*.tfrecords",
 
     "restore_reinit": true,
     "restore_ckpt": "gs://sfr-codegen-research/checkpoints/codegen-6B-multi",
